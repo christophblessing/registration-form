@@ -39,30 +39,6 @@ class RegistrationForm extends React.Component<Props> {
     this.changeHandler = this.changeHandler.bind(this);
   }
 
-  state: State = {
-    dateOfMoving: "",
-    postCode: 0,
-    street: "",
-    houseNumber: "",
-    addOn: "",
-    floor: 0,
-    apartmentNumber: 0,
-    landlord: "",
-    details1: {
-      surname: "",
-      birthName: "",
-      firstName: "",
-      gender: "",
-      dateOfBirth: "",
-      placeOfBirth: "",
-      maritalRelationShip: "",
-      religion: "",
-      currentNationalities: "",
-      idCard: "",
-      passPort: "",
-    },
-  };
-
   changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.target.name;
     const value = event.target.value;
@@ -91,7 +67,6 @@ class RegistrationForm extends React.Component<Props> {
               type="date"
               name="dateOfMoving"
               className="form-control"
-              value={this.state.dateOfMoving}
               onChange={this.changeHandler}
             />
           </div>
@@ -101,7 +76,6 @@ class RegistrationForm extends React.Component<Props> {
               name="postCode"
               className="form-control"
               type="number"
-              value={this.state.postCode}
               onChange={this.changeHandler}
             />
           </div>
@@ -110,7 +84,6 @@ class RegistrationForm extends React.Component<Props> {
             <input
               className="form-control"
               name="street"
-              value={this.state.street}
               onChange={this.changeHandler}
             />
           </div>
@@ -120,7 +93,6 @@ class RegistrationForm extends React.Component<Props> {
               type="number"
               className="form-control"
               name="houseNumber"
-              value={this.state.houseNumber}
               onChange={this.changeHandler}
             />
           </div>
@@ -129,7 +101,6 @@ class RegistrationForm extends React.Component<Props> {
             <input
               className="form-control"
               name="addOn"
-              value={this.state.addOn}
               onChange={this.changeHandler}
             />
           </div>
@@ -139,7 +110,6 @@ class RegistrationForm extends React.Component<Props> {
               type="number"
               className="form-control"
               name="floor"
-              value={this.state.floor}
               onChange={this.changeHandler}
             />
           </div>
@@ -149,14 +119,14 @@ class RegistrationForm extends React.Component<Props> {
               type="number"
               className="form-control"
               name="apartmentNumber"
-              value={this.state.apartmentNumber}
               onChange={this.changeHandler}
             />
           </div>
           <div className="form-group">
             <label>Name and Address of Landlord</label>
-            <input className="form-control" value={this.state.landlord} onChange={this.changeHandler} />
+            <input className="form-control" onChange={this.changeHandler} />
           </div>
+
           <DetailsForm id="detail1" handleChange={this.detailsChangeHandler} />
           <DetailsForm id="detail2" handleChange={this.detailsChangeHandler} />
           <DetailsForm id="detail3" handleChange={this.detailsChangeHandler} />
