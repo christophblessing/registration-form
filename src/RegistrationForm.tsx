@@ -1,8 +1,23 @@
 import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
+
 interface Props {}
 
-// TODO: refactor
+interface State {
+  dateOfMoving: string;
+  postCode: number;
+  apartmentNumber: number;
+  street: string;
+  houseNumber: string;
+  addOn: string;
+  floor: number;
+  landlord: string;
+  details1: DetailsProps;
+  details2?: DetailsProps;
+  details3?: DetailsProps;
+  details4?: DetailsProps;
+}
+
 interface DetailsProps {
   surname: string;
   birthName: string;
@@ -17,22 +32,23 @@ interface DetailsProps {
   passPort: string;
 }
 
-interface State {
-  dateOfMoving: string;
-  details: DetailsProps;
-}
-
 class RegistrationForm extends React.Component {
   constructor(props: Props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleSurnameChange = this.handleSurnameChange.bind(this);
+    this.changeHandler = this.changeHandler.bind(this);
   }
 
   state: State = {
     dateOfMoving: "",
-    details: {
+    postCode: 0,
+    street: "",
+    houseNumber: "",
+    addOn: "",
+    floor: 0,
+    apartmentNumber: 0,
+    landlord: "",
+    details1: {
       surname: "",
       birthName: "",
       firstName: "",
@@ -47,12 +63,16 @@ class RegistrationForm extends React.Component {
     },
   };
 
-  handleDateChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ dateOfMoving: event?.target?.value });
+  changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    let key = event.target.name;
+    let value = event.target.value;
+    this.setState({ [key]: value });
   };
 
-  handleSurnameChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    this.setState({ details: { surname: event?.target?.value } });
+  detailsChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    let nam = event.target.name;
+    let val = event.target.value;
+    this.setState({ details1: { [nam]: val } });
   };
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -62,66 +82,99 @@ class RegistrationForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label>
-            Date of moving
+      <div className="container">
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label>Date of moving</label>
             <input
               type="date"
+              name="dateOfMoving"
+              className="form-control"
               value={this.state.dateOfMoving}
-              onChange={this.handleDateChange}
+              onChange={this.changeHandler}
             />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Into the apartment in
-            <input type="number" />
-            in Hamburg
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Street (or place ect.)
-            <input />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            House Number
-            <input type="number" />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Add-on (e.g. name of main tenant)
-            <input />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Floor
-            <input type="number" />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Apartment Number
-            <input type="number" />
-          </label>
-        </div>
-        <div className="form-group">
-          <label>
-            Name and Address of Landlord
-            <input></input>
-          </label>
-        </div>
-        <DetailsForm handleSurnameChange={this.handleSurnameChange} />
+          </div>
+          <div className="form-group">
+            <label>Into the apartment in in Hamburg</label>
+            <input
+              name="postCode"
+              className="form-control"
+              type="number"
+              value={this.state.postCode}
+              onChange={this.changeHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label>Street (or place ect.)</label>
+            <input
+              className="form-control"
+              name="street"
+              value={this.state.street}
+              onChange={this.changeHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label>House Number</label>
+            <input
+              type="number"
+              className="form-control"
+              name="houseNumber"
+              value={this.state.houseNumber}
+              onChange={this.changeHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label>Add-on (e.g. name of main tenant)</label>
+            <input
+              className="form-control"
+              name="addOn"
+              value={this.state.addOn}
+              onChange={this.changeHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label>Floor</label>
+            <input
+              type="number"
+              className="form-control"
+              name="floor"
+              value={this.state.floor}
+              onChange={this.changeHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label>Apartment Number</label>
+            <input
+              type="number"
+              className="form-control"
+              name="apartmentNumber"
+              value={this.state.apartmentNumber}
+              onChange={this.changeHandler}
+            />
+          </div>
+          <div className="form-group">
+            <label>Name and Address of Landlord</label>
+            <input className="form-control" value={this.state.landlord} onChange={this.changeHandler} />
+          </div>
+          <DetailsForm handleSurnameChange={this.detailsChangeHandler} />
+          <DetailsForm handleSurnameChange={this.detailsChangeHandler} />
+          <DetailsForm handleSurnameChange={this.detailsChangeHandler} />
+          <DetailsForm handleSurnameChange={this.detailsChangeHandler} />
 
-        <button type="submit" className="btn btn-default">
-          Submit
-        </button>
-      </form>
+          <div className="form-group">
+            <label>Previous accommodation Post Code</label>
+            <input className="form-control" type="number"></input>
+          </div>
+
+          <div className="form-group">
+            <label>Municipality / street / house number and add-on</label>
+            <input className="form-control" />
+          </div>
+          <button type="submit" className="btn btn-default">
+            Submit
+          </button>
+        </form>
+      </div>
     );
   }
 }
