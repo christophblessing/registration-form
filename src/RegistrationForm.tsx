@@ -12,13 +12,13 @@ interface State {
   addOn: string;
   floor: number;
   landlord: string;
-  details1: DetailsProps;
-  details2?: DetailsProps;
-  details3?: DetailsProps;
-  details4?: DetailsProps;
+  details1: Details;
+  details2?: Details;
+  details3?: Details;
+  details4?: Details;
 }
 
-interface DetailsProps {
+interface Details {
   surname: string;
   birthName: string;
   firstName: string;
@@ -32,7 +32,7 @@ interface DetailsProps {
   passPort: string;
 }
 
-class RegistrationForm extends React.Component {
+class RegistrationForm extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -64,15 +64,16 @@ class RegistrationForm extends React.Component {
   };
 
   changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    let key = event.target.name;
-    let value = event.target.value;
+    const key = event.target.name;
+    const value = event.target.value;
     this.setState({ [key]: value });
   };
 
   detailsChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    let nam = event.target.name;
-    let val = event.target.value;
-    this.setState({ details1: { [nam]: val } });
+    const key = event.target.name;
+    const value = event.target.value;
+    const detailId = event.target.id;
+    this.setState({ [detailId]: { [key]: value } });
   };
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -156,10 +157,10 @@ class RegistrationForm extends React.Component {
             <label>Name and Address of Landlord</label>
             <input className="form-control" value={this.state.landlord} onChange={this.changeHandler} />
           </div>
-          <DetailsForm handleSurnameChange={this.detailsChangeHandler} />
-          <DetailsForm handleSurnameChange={this.detailsChangeHandler} />
-          <DetailsForm handleSurnameChange={this.detailsChangeHandler} />
-          <DetailsForm handleSurnameChange={this.detailsChangeHandler} />
+          <DetailsForm id="detail1" handleChange={this.detailsChangeHandler} />
+          <DetailsForm id="detail2" handleChange={this.detailsChangeHandler} />
+          <DetailsForm id="detail3" handleChange={this.detailsChangeHandler} />
+          <DetailsForm id="detail4" handleChange={this.detailsChangeHandler} />
 
           <div className="form-group">
             <label>Previous accommodation Post Code</label>
