@@ -1,13 +1,18 @@
 import React, { ChangeEvent } from "react";
 
-interface DetailsProps {
-  handleSurnameChange: (event: ChangeEvent<HTMLInputElement>) => void;
+interface Props {
+  id: string;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-class Details extends React.Component<DetailsProps> {
-  handleBirthNameChange() {}
+class Details extends React.Component<Props> {
+  id: string;
 
-  handleGenderChange() {}
+  constructor(props: Props) {
+    super(props);
+
+    this.id = props.id;
+  }
 
   render() {
     return (
@@ -16,7 +21,8 @@ class Details extends React.Component<DetailsProps> {
           <label>Surname / Doctoral Degree</label>
           <input
             className="form-control"
-            onChange={this.props.handleSurnameChange}
+            name=""
+            onChange={this.props.handleChange}
           />
         </div>
 
@@ -36,7 +42,7 @@ class Details extends React.Component<DetailsProps> {
             type="radio"
             value="male"
             id="male"
-            onChange={this.handleGenderChange}
+            onChange={this.props.handleChange}
             name="gender"
           />
           <label htmlFor="female">Female</label>
@@ -44,7 +50,7 @@ class Details extends React.Component<DetailsProps> {
             type="radio"
             value="female"
             id="female"
-            onChange={this.handleGenderChange}
+            onChange={this.props.handleChange}
             name="gender"
           />
         </div>
