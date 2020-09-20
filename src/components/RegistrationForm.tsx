@@ -1,6 +1,6 @@
 import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
-import { State } from "./types/types";
+import { State } from "../types/types";
 
 interface Props {}
 
