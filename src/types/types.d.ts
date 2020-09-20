@@ -7,10 +7,7 @@ export interface State {
     addOn: string;
     floor: number;
     landlord: string;
-    details1: Details;
-    details2?: Details;
-    details3?: Details;
-    details4?: Details;
+    familyMembers: Details[];
     previousAccommodation: {
         postCode: number;
         address: string

@@ -20,7 +20,8 @@ class RegistrationForm extends React.Component<Props> {
     addOn: "",
     floor: 0,
     landlord: "",
-    details1: {
+    familyMembers: [
+      {
       surname: "",
       birthName: "",
       firstName: "",
@@ -33,6 +34,7 @@ class RegistrationForm extends React.Component<Props> {
       idCard: "",
       passport: "",
     },
+    ],
     previousAccommodation: {
       postCode: 0,
       address: "",
@@ -43,6 +45,28 @@ class RegistrationForm extends React.Component<Props> {
     const key = event.target.name;
     const value = event.target.value;
     this.setState({ [key]: value });
+  };
+
+  initFamilyMember = (event: ChangeEvent<HTMLInputElement>) => {
+    const key = event.target.name;
+    const value = event.target.value;
+    const familyMembers = this.state.familyMembers;
+    familyMembers.push(
+      {
+        surname: "",
+        birthName: "",
+        firstName: "",
+        gender: "",
+        dateOfBirth: "",
+        placeOfBirth: "",
+        maritalRelationship: "",
+        religion: "",
+        currentNationalities: "",
+        idCard: "",
+        passport: "",
+      }
+    );
+    this.setState({ familyMembers: familyMembers });
   };
 
   detailsChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +82,17 @@ class RegistrationForm extends React.Component<Props> {
   }
 
   render() {
+    const detailForms: any[] = [];
+
+    this.state.familyMembers.forEach((member, index) => {
+      detailForms.push(
+        <DetailsForm
+          id={index.toString()}
+          handleChange={this.detailsChangeHandler}
+        />
+      );
+    });
+
     return (
       <div className="container">
         <form onSubmit={this.handleSubmit}>
@@ -134,18 +169,31 @@ class RegistrationForm extends React.Component<Props> {
             <input className="form-control" onChange={this.changeHandler} />
           </div>
 
-          <DetailsForm id="detail1" handleChange={this.detailsChangeHandler} />
-          {/* <DetailsForm id="detail2" handleChange={this.detailsChangeHandler} /> */}
-          {/* <DetailsForm id="detail3" handleChange={this.detailsChangeHandler} /> */}
-          {/* <DetailsForm id="detail4" handleChange={this.detailsChangeHandler} /> */}
+          {/* Begin Details Forms */}
+          <div className="form-group">
+            <h3>Family Members</h3>
+            <label>Number of Family Members</label>
+            <input
+              className="form-control"
+              type="number"
+              value={this.state.familyMembers.length}
+              onChange={this.initFamilyMember}
+            />
+            <small>
+              Please provide details for each family member living in the same
+              domicile. These fields are identical.
+            </small>
+          </div>
+          {detailForms}
+          {/*End Details Forms */}
 
           <div className="well">
             <div className="form-group">
               <label>Previous accommodation</label>
               <input className="form-control" type="number"></input>
-              Post Code
+              <small>Post Code</small>
               <input className="form-control" />
-              Municipality / street / house number and add-on
+              <small> Municipality / street / house number and add-on</small>
             </div>
             <small>
               Please complete the “supplementary sheet for the registration of

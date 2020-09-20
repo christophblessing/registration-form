@@ -5,7 +5,7 @@ interface Props {
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-class Details extends React.Component<Props> {
+class DetailsForm extends React.Component<Props> {
   id: string;
 
   constructor(props: Props) {
@@ -17,7 +17,6 @@ class Details extends React.Component<Props> {
   render() {
     return (
       <div className="well">
-        <h3>Family Member</h3>
         <div className="form-group">
           <label>Surname / Doctoral Degree</label>
           <input className="form-control" onChange={this.props.handleChange} />
@@ -258,4 +257,4 @@ class Details extends React.Component<Props> {
   }
 }
 
-export default Details;
+export default DetailsForm;
