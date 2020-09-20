@@ -1,6 +1,6 @@
 import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
-import { State } from "../types/types";
+import { FamilyMembers, State } from "../types/types";
 
 interface Props {}
 
@@ -20,21 +20,21 @@ class RegistrationForm extends React.Component<Props> {
     addOn: "",
     floor: 0,
     landlord: "",
-    familyMembers: [
-      {
-      surname: "",
-      birthName: "",
-      firstName: "",
-      gender: "",
-      dateOfBirth: "",
-      placeOfBirth: "",
-      maritalRelationship: "",
-      religion: "",
-      currentNationalities: "",
-      idCard: "",
-      passport: "",
+    familyMembers: {
+      familyMember1: {
+        surname: "",
+        birthName: "",
+        firstName: "",
+        gender: "",
+        dateOfBirth: "",
+        placeOfBirth: "",
+        maritalRelationship: "",
+        religion: "",
+        currentNationalities: "",
+        idCard: "",
+        passport: "",
+      },
     },
-    ],
     previousAccommodation: {
       postCode: 0,
       address: "",
@@ -47,12 +47,14 @@ class RegistrationForm extends React.Component<Props> {
     this.setState({ [key]: value });
   };
 
-  initFamilyMember = (event: ChangeEvent<HTMLInputElement>) => {
-    const key = event.target.name;
-    const value = event.target.value;
-    const familyMembers = this.state.familyMembers;
-    familyMembers.push(
-      {
+  initFamilyMembers = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+
+    const familyMembers: FamilyMembers = {};
+
+    for (var i = 0; i < value; i++) {
+      const name = "familyMember" + i;
+      const newMember = {
         surname: "",
         birthName: "",
         firstName: "",
@@ -64,16 +66,18 @@ class RegistrationForm extends React.Component<Props> {
         currentNationalities: "",
         idCard: "",
         passport: "",
-      }
-    );
+      };
+      familyMembers[name] = newMember;
+    }
+
     this.setState({ familyMembers: familyMembers });
   };
 
-  detailsChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const key = event.target.name;
-    const value = event.target.value;
-    const detailId = event.target.id;
-    this.setState({ [detailId]: { [key]: value } });
+  detailsChangeHandler = (key: string, value: string, id: string) => {
+    const updatedMember = { [id]: { [key]: value } };
+    const members = { ...this.state.familyMembers, ...updatedMember };
+
+    this.setState({ familyMembers: members });
   };
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -84,10 +88,12 @@ class RegistrationForm extends React.Component<Props> {
   render() {
     const detailForms: any[] = [];
 
-    this.state.familyMembers.forEach((member, index) => {
+    Object.keys(this.state.familyMembers).forEach((member, index) => {
+      const id = index.toString();
       detailForms.push(
         <DetailsForm
-          id={index.toString()}
+          id={"familyMember" + id}
+          key={"familyMember" + id}
           handleChange={this.detailsChangeHandler}
         />
       );
@@ -176,8 +182,9 @@ class RegistrationForm extends React.Component<Props> {
             <input
               className="form-control"
               type="number"
-              value={this.state.familyMembers.length}
-              onChange={this.initFamilyMember}
+              min="1"
+              value={Object.keys(this.state.familyMembers).length}
+              onChange={this.initFamilyMembers}
             />
             <small>
               Please provide details for each family member living in the same

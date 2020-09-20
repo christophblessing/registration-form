@@ -7,11 +7,15 @@ export interface State {
     addOn: string;
     floor: number;
     landlord: string;
-    familyMembers: Details[];
+    familyMembers: FamilyMembers;
     previousAccommodation: {
         postCode: number;
         address: string
     }
+  }
+
+  interface FamilyMembers {
+  [key: string]: Details
   }
 
   export interface Details {
