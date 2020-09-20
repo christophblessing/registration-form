@@ -1,6 +1,6 @@
 import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
-import { FamilyMembers, State } from "../types/types";
+import { Details, FamilyMembers, State } from "../types/types";
 
 interface Props {}
 
@@ -21,7 +21,7 @@ class RegistrationForm extends React.Component<Props> {
     floor: 0,
     landlord: "",
     familyMembers: {
-      familyMember1: {
+      familyMember0: {
         surname: "",
         birthName: "",
         firstName: "",
@@ -74,10 +74,15 @@ class RegistrationForm extends React.Component<Props> {
   };
 
   detailsChangeHandler = (key: string, value: string, id: string) => {
-    const updatedMember = { [id]: { [key]: value } };
-    const members = { ...this.state.familyMembers, ...updatedMember };
-
-    this.setState({ familyMembers: members });
+    this.setState((prevState: State) => ({
+      ...prevState,
+      familyMembers: {
+         ...prevState.familyMembers,
+         [id]: {
+           ...prevState.familyMembers[id],
+           [key]: value
+         } },
+    }));
   };
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {

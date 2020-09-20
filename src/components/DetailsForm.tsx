@@ -16,9 +16,12 @@ class DetailsForm extends React.Component<Props> {
   }
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const key = event.target.name;
-    const value = event.target.value;
     const id = this.id;
+    let key = event.target.name;
+    // radios use the id in the name tag to distinguish from the radios from other tags
+    key = key.replace(id, "");
+
+    const value = event.target.value;
 
     this.props.handleChange(key, value, id);
   };
@@ -28,18 +31,22 @@ class DetailsForm extends React.Component<Props> {
       <div className="well">
         <div className="form-group">
           <label>Surname / Doctoral Degree</label>
-          <input className="form-control" onChange={this.handleChange} />
+          <input
+            className="form-control"
+            name="surname"
+            onChange={this.handleChange}
+          />
         </div>
 
         <div className="form-group">
           <label>Birth Name</label>
-          <input className="form-control" />
+          <input className="form-control" name="birthName" />
           <small>(if applicable)</small>
         </div>
 
         <div className="form-group">
           <label>First Name(s)</label>
-          <input className="form-control" />
+          <input className="form-control" name="firstName" />
         </div>
 
         <div className="form-group">
@@ -50,7 +57,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="male"
                 onChange={this.handleChange}
-                name={this.id + "-gender"}
+                name={this.id + "gender"}
               />
               Male
             </label>
@@ -61,7 +68,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="female"
                 onChange={this.handleChange}
-                name={this.id + "-gender"}
+                name={this.id + "gender"}
               />
               Female
             </label>
@@ -73,7 +80,8 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="div"
                 onChange={this.handleChange}
-                name={this.id + "-gender"}
+                name={this.id + "gender"}
+                id="gender"
               />
               Div.
             </label>
@@ -85,13 +93,18 @@ class DetailsForm extends React.Component<Props> {
           <input
             className="form-control"
             type="date"
+            name="dateOfBirth"
             onChange={this.handleChange}
           />
         </div>
 
         <div className="form-group">
           <label>Place of Birth</label>
-          <input className="form-control" onChange={this.handleChange} />
+          <input
+            className="form-control"
+            name="placeOfBirth"
+            onChange={this.handleChange}
+          />
           <small>(city and country)</small>
         </div>
 
@@ -104,7 +117,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="single"
                 onChange={this.handleChange}
-                name={this.id + "-maritalRelationship"}
+                name={this.id + "maritalRelationship"}
               />
               Single
             </label>
@@ -116,7 +129,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="married"
                 onChange={this.handleChange}
-                name={this.id + "-maritalRelationship"}
+                name={this.id + "maritalRelationship"}
               />
               Married
             </label>
@@ -128,7 +141,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="divorced"
                 onChange={this.handleChange}
-                name={this.id + "-maritalRelationship"}
+                name={this.id + "maritalRelationship"}
               />
               Divorced
             </label>
@@ -139,7 +152,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="widowed"
                 onChange={this.handleChange}
-                name={this.id + "-maritalRelationship"}
+                name={this.id + "maritalRelationship"}
               />
               Widowed
             </label>
@@ -150,7 +163,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="civil partnership"
                 onChange={this.handleChange}
-                name={this.id + "-maritalRelationship"}
+                name={this.id + "maritalRelationship"}
               />
               Civil Partnership
             </label>
@@ -161,7 +174,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="annulled civil partnership"
                 onChange={this.handleChange}
-                name={this.id + "-maritalRelationship"}
+                name={this.id + "maritalRelationship"}
               />
               Annulled Civil Partnership
             </label>
@@ -172,7 +185,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="widowed civil partnership"
                 onChange={this.handleChange}
-                name={this.id + "-maritalRelationship"}
+                name={this.id + "maritalRelationship"}
               />
               Widowed Civil Partnership
             </label>
@@ -189,7 +202,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="lutheran"
                 onChange={this.handleChange}
-                name={this.id + "-religion"}
+                name={this.id + "religion"}
               />
               Lutheran
             </label>
@@ -200,7 +213,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="roman catholic"
                 onChange={this.handleChange}
-                name={this.id + "-religion"}
+                name={this.id + "religion"}
               />
               Roman Catholic
             </label>
@@ -211,7 +224,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="jewish"
                 onChange={this.handleChange}
-                name={this.id + "-religion"}
+                name={this.id + "religion"}
               />
               Jewish Com. Hamb.
             </label>
@@ -222,7 +235,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="reformed churches"
                 onChange={this.handleChange}
-                name={this.id + "-religion"}
+                name={this.id + "religion"}
               />
               Reformed Churches
             </label>
@@ -233,7 +246,7 @@ class DetailsForm extends React.Component<Props> {
                 type="radio"
                 value="other"
                 onChange={this.handleChange}
-                name={this.id + "-religion"}
+                name={this.id + "religion"}
               />
               Other religious communities / no statement / none
             </label>
@@ -243,12 +256,20 @@ class DetailsForm extends React.Component<Props> {
 
         <div className="form-group">
           <label>Current Nationalities</label>
-          <input className="form-control" onChange={this.handleChange} />
+          <input
+            className="form-control"
+            name="currentNationalities"
+            onChange={this.handleChange}
+          />
         </div>
 
         <div className="form-group">
           <label>ID Card</label>
-          <input className="form-control" onChange={this.handleChange} />
+          <input
+            className="form-control"
+            name="idCard"
+            onChange={this.handleChange}
+          />
           <small>
             Issuing authority, date of issue, expiry date and serial number
           </small>
@@ -256,7 +277,11 @@ class DetailsForm extends React.Component<Props> {
 
         <div className="form-group">
           <label>Passport</label>
-          <input className="form-control" onChange={this.handleChange} />
+          <input
+            className="form-control"
+            name="passport"
+            onChange={this.handleChange}
+          />
           <small>
             Issuing authority, date of issue, expiry date and serial number
           </small>
