@@ -10,6 +10,8 @@ export interface State {
   familyMembers: FamilyMembers;
   previousAccommodationPostCode: number;
   previousAccommodationAddress: string;
+  signatureDate: string;
+  signatureCity: string;
 }
 
 interface FamilyMembers {

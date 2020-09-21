@@ -29,6 +29,8 @@ class RegistrationForm extends React.Component {
     },
     previousAccommodationPostCode: 0,
     previousAccommodationAddress: "",
+    signatureDate: "",
+    signatureCity: "",
   };
 
   constructor(props: {}) {
@@ -121,6 +123,7 @@ class RegistrationForm extends React.Component {
                 value={this.state.dateOfMoving}
                 className="form-control"
                 onChange={this.handleChange}
+                placeholder="yyyy-mm-dd"
               />
             </div>
             <div className="form-group">
@@ -240,10 +243,37 @@ class RegistrationForm extends React.Component {
             </small>
           </div>
           <div className="form-group">
-            <button type="submit" className="btn btn-primary">
-              Submit
-            </button>
+            <label>Date</label>
+            <input
+              type="date"
+              name="signatureDate"
+              value={this.state.signatureDate}
+              className="form-control"
+              onChange={this.handleChange}
+              placeholder="yyyy-mm-dd"
+            />
           </div>
+          <div className="form-group">
+            <label>City</label>
+            <input
+              name="signatureCity"
+              value={this.state.signatureCity}
+              className="form-control"
+              onChange={this.handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label>Signature</label>
+            <canvas
+              className="form-control"
+              style={{ height: "100px" }}
+            >Please sign here</canvas>
+            </div>
+            <div className="form-group">
+              <button type="submit" className="form-control btn btn-primary">
+                Submit
+              </button>
+            </div>
         </form>
       </div>
     );
