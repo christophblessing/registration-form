@@ -1,6 +1,6 @@
 import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
-import { FamilyMembers, State } from "../types/types";
+import { FamilyMembers, Details, State } from "../types/types";
 
 class RegistrationForm extends React.Component {
   state: State = {
@@ -37,6 +37,7 @@ class RegistrationForm extends React.Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeNumberValue = this.handleChangeNumberValue.bind(this);
   }
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -71,24 +72,27 @@ class RegistrationForm extends React.Component {
 
     for (let i = 0; i < value; i++) {
       const name = "familyMember" + i;
-      familyMembers[name] = {
-        surname: this.state.familyMembers[name]?.surname || "",
-        birthName: this.state.familyMembers[name]?.birthName || "",
-        firstName: this.state.familyMembers[name]?.firstName || "",
-        gender: this.state.familyMembers[name]?.gender || "",
-        dateOfBirth: this.state.familyMembers[name]?.dateOfBirth || "",
-        placeOfBirth: this.state.familyMembers[name]?.placeOfBirth || "",
-        maritalRelationship:
-          this.state.familyMembers[name]?.maritalRelationship || "",
-        religion: this.state.familyMembers[name]?.religion || "",
-        currentNationalities:
-          this.state.familyMembers[name]?.currentNationalities || "",
-        idCard: this.state.familyMembers[name]?.idCard || "",
-        passport: this.state.familyMembers[name]?.passport || "",
-      };
+      familyMembers[name] = this.initMemberValues(name);
     }
 
     this.setState({ familyMembers: familyMembers });
+  };
+
+  initMemberValues = (name: string): Details => {
+    const member = this.state.familyMembers[name];
+    return {
+      surname: member?.surname || "",
+      birthName: member?.birthName || "",
+      firstName: member?.firstName || "",
+      gender: member?.gender || "",
+      dateOfBirth: member?.dateOfBirth || "",
+      placeOfBirth: member?.placeOfBirth || "",
+      maritalRelationship: member?.maritalRelationship || "",
+      religion: member?.religion || "",
+      currentNationalities: member?.currentNationalities || "",
+      idCard: member?.idCard || "",
+      passport: member?.passport || "",
+    };
   };
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {

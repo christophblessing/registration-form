@@ -1,20 +1,6 @@
 import React, { ChangeEvent } from "react";
 import { Details, detailsKeys } from "../types/types";
 
-const FILTER_KEYS = [
-  "surname",
-  "birthName",
-  "firstName",
-  "gender",
-  "dateOfBirth",
-  "placeOfBirth",
-  "maritalRelationship",
-  "religion",
-  "currentNationalities",
-  "idCard",
-  "passport",
-];
-
 interface Props {
   id: string;
   details: Details;
@@ -38,19 +24,13 @@ class DetailsForm extends React.Component<Props> {
     const value = event.target.value;
     const key = this.parseKey(event.target.name, id);
 
-    if (this.isDetailsKey(key)) {
-      this.details[key] = value;
-      this.props.handleChange(key, value, id);
-    }
+    this.details[key as detailsKeys] = value;
+    this.props.handleChange(key, value, id);
   };
 
   // radios use the id in the name tag to distinguish from the radios from other tags
   parseKey = (key: string, id: string): string => {
     return key.replace(id, "");
-  };
-
-  isDetailsKey = (key: any): key is detailsKeys => {
-    return FILTER_KEYS.includes(key as detailsKeys);
   };
 
   render() {
