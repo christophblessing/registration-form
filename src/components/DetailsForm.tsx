@@ -1,29 +1,56 @@
 import React, { ChangeEvent } from "react";
+import { Details, detailsKeys } from "../types/types";
+
+const FILTER_KEYS = [
+  "surname",
+  "birthName",
+  "firstName",
+  "gender",
+  "dateOfBirth",
+  "placeOfBirth",
+  "maritalRelationship",
+  "religion",
+  "currentNationalities",
+  "idCard",
+  "passport",
+];
 
 interface Props {
   id: string;
+  details: Details;
   handleChange: (key: string, value: string, id: string) => void;
 }
 
 class DetailsForm extends React.Component<Props> {
   id: string;
+  details: Details;
 
   constructor(props: Props) {
     super(props);
 
     this.id = props.id;
+    this.details = props.details;
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const id = this.id;
-    let key = event.target.name;
-    // radios use the id in the name tag to distinguish from the radios from other tags
-    key = key.replace(id, "");
-
     const value = event.target.value;
+    const key = this.parseKey(event.target.name, id);
 
-    this.props.handleChange(key, value, id);
+    if (this.isDetailsKey(key)) {
+      this.details[key] = value;
+      this.props.handleChange(key, value, id);
+    }
+  };
+
+  // radios use the id in the name tag to distinguish from the radios from other tags
+  parseKey = (key: string, id: string): string => {
+    return key.replace(id, "");
+  };
+
+  isDetailsKey = (key: any): key is detailsKeys => {
+    return FILTER_KEYS.includes(key as detailsKeys);
   };
 
   render() {
@@ -34,19 +61,29 @@ class DetailsForm extends React.Component<Props> {
           <input
             className="form-control"
             name="surname"
+            value={this.details.surname}
             onChange={this.handleChange}
           />
         </div>
 
         <div className="form-group">
           <label>Birth Name</label>
-          <input className="form-control" name="birthName" />
+          <input
+            className="form-control"
+            name="birthName"
+            value={this.details.birthName}
+            onChange={this.handleChange}
+          />
           <small>(if applicable)</small>
         </div>
 
         <div className="form-group">
           <label>First Name(s)</label>
-          <input className="form-control" name="firstName" />
+          <input
+            className="form-control"
+            name="firstName"
+            onChange={this.handleChange}
+          />
         </div>
 
         <div className="form-group">

@@ -1,40 +1,44 @@
 export interface State {
-    dateOfMoving: string;
-    postCode: number;
-    apartmentNumber: number;
-    street: string;
-    houseNumber: string;
-    addOn: string;
-    floor: number;
-    landlord: string;
-    familyMembers: FamilyMembers;
-    previousAccommodation: {
-        postCode: number;
-        address: string
-    }
-  }
+  dateOfMoving: string;
+  postCode: number;
+  apartmentNumber: number;
+  street: string;
+  houseNumber: string;
+  addOn: string;
+  floor: number;
+  landlord: string;
+  familyMembers: FamilyMembers;
+  previousAccommodationPostCode: number;
+  previousAccommodationAddress: string;
+}
 
-  interface FamilyMembers {
-  [key: string]: Details
-  }
+interface FamilyMembers {
+  [key: string]: Details;
+}
 
-  export interface Details {
-    surname: string;
-    birthName: string;
-    firstName: string;
-    gender: string;
-    dateOfBirth: string;
-    placeOfBirth: string;
-    maritalRelationship: string;
-    religion: string;
-    currentNationalities: string;
-    idCard: string; // TODO: use Card Interface
-    passport: string; // TODO: use Card Interface
-  }
+export interface Details {
+  surname: string;
+  birthName: string;
+  firstName: string;
+  gender: string;
+  dateOfBirth: string;
+  placeOfBirth: string;
+  maritalRelationship: string;
+  religion: string;
+  currentNationalities: string;
+  idCard: string;
+  passport: string;
+}
 
-  interface Card {
-    issuingAuthority: string;
-    dateOfIssue: string;
-    expiryDate: string;
-    serialNumber: number;
-  }
+export type detailsKeys =
+  | "surname"
+  | "birthName"
+  | "firstName"
+  | "gender"
+  | "dateOfBirth"
+  | "placeOfBirth"
+  | "maritalRelationship"
+  | "religion"
+  | "currentNationalities"
+  | "idCard"
+  | "passport";

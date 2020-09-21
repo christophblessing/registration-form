@@ -1,6 +1,6 @@
 import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
-import { Details, FamilyMembers, State } from "../types/types";
+import { FamilyMembers, State } from "../types/types";
 
 interface Props {}
 
@@ -8,7 +8,7 @@ class RegistrationForm extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.changeHandler = this.changeHandler.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   state: State = {
@@ -35,15 +35,19 @@ class RegistrationForm extends React.Component<Props> {
         passport: "",
       },
     },
-    previousAccommodation: {
-      postCode: 0,
-      address: "",
-    },
+    previousAccommodationPostCode: 0,
+    previousAccommodationAddress: "",
   };
 
-  changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.target.name;
     const value = event.target.value;
+    this.setState({ [key]: value });
+  };
+
+  handleChangeNumberValue = (event: ChangeEvent<HTMLInputElement>) => {
+    const key = event.target.name;
+    const value = Number.parseInt(event.target.value);
     this.setState({ [key]: value });
   };
 
@@ -55,17 +59,17 @@ class RegistrationForm extends React.Component<Props> {
     for (var i = 0; i < value; i++) {
       const name = "familyMember" + i;
       const newMember = {
-        surname: "",
-        birthName: "",
-        firstName: "",
-        gender: "",
-        dateOfBirth: "",
-        placeOfBirth: "",
-        maritalRelationship: "",
-        religion: "",
-        currentNationalities: "",
-        idCard: "",
-        passport: "",
+        surname: this.state.familyMembers[name]?.surname || "",
+        birthName: this.state.familyMembers[name]?.birthName || "",
+        firstName: this.state.familyMembers[name]?.firstName || "",
+        gender: this.state.familyMembers[name]?.gender || "",
+        dateOfBirth: this.state.familyMembers[name]?.dateOfBirth || "",
+        placeOfBirth: this.state.familyMembers[name]?.placeOfBirth || "",
+        maritalRelationship: this.state.familyMembers[name]?.maritalRelationship || "",
+        religion: this.state.familyMembers[name]?.religion || "",
+        currentNationalities: this.state.familyMembers[name]?.currentNationalities || "",
+        idCard: this.state.familyMembers[name]?.idCard || "",
+        passport: this.state.familyMembers[name]?.passport || "",
       };
       familyMembers[name] = newMember;
     }
@@ -77,11 +81,12 @@ class RegistrationForm extends React.Component<Props> {
     this.setState((prevState: State) => ({
       ...prevState,
       familyMembers: {
-         ...prevState.familyMembers,
-         [id]: {
-           ...prevState.familyMembers[id],
-           [key]: value
-         } },
+        ...prevState.familyMembers,
+        [id]: {
+          ...prevState.familyMembers[id],
+          [key]: value,
+        },
+      },
     }));
   };
 
@@ -99,6 +104,7 @@ class RegistrationForm extends React.Component<Props> {
         <DetailsForm
           id={"familyMember" + id}
           key={"familyMember" + id}
+          details={this.state.familyMembers["familyMember"+ id]}
           handleChange={this.detailsChangeHandler}
         />
       );
@@ -113,8 +119,9 @@ class RegistrationForm extends React.Component<Props> {
               <input
                 type="date"
                 name="dateOfMoving"
+                value={this.state.dateOfMoving}
                 className="form-control"
-                onChange={this.changeHandler}
+                onChange={this.handleChange}
               />
             </div>
             <div className="form-group">
@@ -124,7 +131,8 @@ class RegistrationForm extends React.Component<Props> {
                 className="form-control"
                 type="number"
                 max={99999}
-                onChange={this.changeHandler}
+                value={this.state.postCode}
+                onChange={this.handleChangeNumberValue}
               />
               <small>Post Code</small>
             </div>
@@ -133,7 +141,8 @@ class RegistrationForm extends React.Component<Props> {
               <input
                 className="form-control"
                 name="street"
-                onChange={this.changeHandler}
+                value={this.state.street}
+                onChange={this.handleChange}
               />
               <small>(or place ect.)</small>
             </div>
@@ -143,7 +152,8 @@ class RegistrationForm extends React.Component<Props> {
                 type="number"
                 className="form-control"
                 name="houseNumber"
-                onChange={this.changeHandler}
+                value={this.state.houseNumber}
+                onChange={this.handleChangeNumberValue}
               />
             </div>
             <div className="form-group">
@@ -151,7 +161,8 @@ class RegistrationForm extends React.Component<Props> {
               <input
                 className="form-control"
                 name="addOn"
-                onChange={this.changeHandler}
+                value={this.state.addOn}
+                onChange={this.handleChange}
               />
               <small>(e.g. name of main tenant)</small>
             </div>
@@ -161,7 +172,8 @@ class RegistrationForm extends React.Component<Props> {
                 type="number"
                 className="form-control"
                 name="floor"
-                onChange={this.changeHandler}
+                value={this.state.floor}
+                onChange={this.handleChangeNumberValue}
               />
             </div>
             <div className="form-group">
@@ -170,14 +182,20 @@ class RegistrationForm extends React.Component<Props> {
                 type="number"
                 className="form-control"
                 name="apartmentNumber"
-                onChange={this.changeHandler}
+                value={this.state.apartmentNumber}
+                onChange={this.handleChangeNumberValue}
               />
             </div>
           </div>
 
           <div className="form-group well">
             <label>Name and Address of Landlord</label>
-            <input className="form-control" onChange={this.changeHandler} />
+            <input
+              className="form-control"
+              name="landlord"
+              value={this.state.landlord}
+              onChange={this.handleChange}
+            />
           </div>
 
           {/* Begin Details Forms */}
@@ -202,9 +220,18 @@ class RegistrationForm extends React.Component<Props> {
           <div className="well">
             <div className="form-group">
               <label>Previous accommodation</label>
-              <input className="form-control" type="number"></input>
+              <input
+                className="form-control"
+                type="number"
+                name="previousAccommodationPostCode"
+                onChange={this.handleChangeNumberValue}
+              ></input>
               <small>Post Code</small>
-              <input className="form-control" />
+              <input
+                className="form-control"
+                name="previousAccommodationAddress"
+                onChange={this.handleChange}
+              />
               <small> Municipality / street / house number and add-on</small>
             </div>
             <small>
