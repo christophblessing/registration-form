@@ -2,15 +2,7 @@ import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
 import { FamilyMembers, State } from "../types/types";
 
-interface Props {}
-
-class RegistrationForm extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
+class RegistrationForm extends React.Component {
   state: State = {
     dateOfMoving: "",
     postCode: 0,
@@ -39,6 +31,12 @@ class RegistrationForm extends React.Component<Props> {
     previousAccommodationAddress: "",
   };
 
+  constructor(props: {}) {
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.target.name;
     const value = event.target.value;
@@ -49,32 +47,6 @@ class RegistrationForm extends React.Component<Props> {
     const key = event.target.name;
     const value = Number.parseInt(event.target.value);
     this.setState({ [key]: value });
-  };
-
-  initFamilyMembers = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value);
-
-    const familyMembers: FamilyMembers = {};
-
-    for (var i = 0; i < value; i++) {
-      const name = "familyMember" + i;
-      const newMember = {
-        surname: this.state.familyMembers[name]?.surname || "",
-        birthName: this.state.familyMembers[name]?.birthName || "",
-        firstName: this.state.familyMembers[name]?.firstName || "",
-        gender: this.state.familyMembers[name]?.gender || "",
-        dateOfBirth: this.state.familyMembers[name]?.dateOfBirth || "",
-        placeOfBirth: this.state.familyMembers[name]?.placeOfBirth || "",
-        maritalRelationship: this.state.familyMembers[name]?.maritalRelationship || "",
-        religion: this.state.familyMembers[name]?.religion || "",
-        currentNationalities: this.state.familyMembers[name]?.currentNationalities || "",
-        idCard: this.state.familyMembers[name]?.idCard || "",
-        passport: this.state.familyMembers[name]?.passport || "",
-      };
-      familyMembers[name] = newMember;
-    }
-
-    this.setState({ familyMembers: familyMembers });
   };
 
   detailsChangeHandler = (key: string, value: string, id: string) => {
@@ -88,6 +60,33 @@ class RegistrationForm extends React.Component<Props> {
         },
       },
     }));
+  };
+
+  initFamilyMembers = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value);
+
+    const familyMembers: FamilyMembers = {};
+
+    for (let i = 0; i < value; i++) {
+      const name = "familyMember" + i;
+      familyMembers[name] = {
+        surname: this.state.familyMembers[name]?.surname || "",
+        birthName: this.state.familyMembers[name]?.birthName || "",
+        firstName: this.state.familyMembers[name]?.firstName || "",
+        gender: this.state.familyMembers[name]?.gender || "",
+        dateOfBirth: this.state.familyMembers[name]?.dateOfBirth || "",
+        placeOfBirth: this.state.familyMembers[name]?.placeOfBirth || "",
+        maritalRelationship:
+          this.state.familyMembers[name]?.maritalRelationship || "",
+        religion: this.state.familyMembers[name]?.religion || "",
+        currentNationalities:
+          this.state.familyMembers[name]?.currentNationalities || "",
+        idCard: this.state.familyMembers[name]?.idCard || "",
+        passport: this.state.familyMembers[name]?.passport || "",
+      };
+    }
+
+    this.setState({ familyMembers: familyMembers });
   };
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
@@ -104,7 +103,7 @@ class RegistrationForm extends React.Component<Props> {
         <DetailsForm
           id={"familyMember" + id}
           key={"familyMember" + id}
-          details={this.state.familyMembers["familyMember"+ id]}
+          details={this.state.familyMembers["familyMember" + id]}
           handleChange={this.detailsChangeHandler}
         />
       );
