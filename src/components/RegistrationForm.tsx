@@ -93,7 +93,29 @@ class RegistrationForm extends React.Component {
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
-    console.log(this.state);
+
+    const debugMode = false;
+
+    if (debugMode) {
+      console.log(this.state);
+    } else {
+      // Source:
+      // https://stackoverflow.com/questions/3665115
+      const fakeDownloadButton = document.createElement("a");
+
+      fakeDownloadButton.setAttribute(
+        "href",
+        "data:text/plain;charset=utf-8," +
+          encodeURIComponent(JSON.stringify(this.state))
+      );
+      fakeDownloadButton.setAttribute("download", "form-data.json");
+      fakeDownloadButton.style.display = "none";
+      document.body.appendChild(fakeDownloadButton);
+
+      fakeDownloadButton.click();
+
+      document.body.removeChild(fakeDownloadButton);
+    }
   }
 
   render() {
@@ -264,16 +286,15 @@ class RegistrationForm extends React.Component {
           </div>
           <div className="form-group">
             <label>Signature</label>
-            <canvas
-              className="form-control"
-              style={{ height: "100px" }}
-            >Please sign here</canvas>
-            </div>
-            <div className="form-group">
-              <button type="submit" className="form-control btn btn-primary">
-                Submit
-              </button>
-            </div>
+            <canvas className="form-control" style={{ height: "100px" }}>
+              Please sign here
+            </canvas>
+          </div>
+          <div className="form-group">
+            <button type="submit" className="form-control btn btn-primary">
+              Submit
+            </button>
+          </div>
         </form>
       </div>
     );
