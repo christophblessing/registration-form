@@ -86,7 +86,7 @@ class RegistrationForm extends React.Component {
           id={index}
           key={"familyMember" + index}
           details={member}
-          handleChange={this.detailsChangeHandler.bind}
+          handleChange={this.detailsChangeHandler}
         />
       );
     });
