@@ -3,11 +3,11 @@ export interface State {
   postCode: number;
   apartmentNumber: number;
   street: string;
-  houseNumber: string;
+  houseNumber: number;
   addOn: string;
   floor: number;
   landlord: string;
-  familyMembers: Details[];
+  familyMembers: Array<Details | null>;
   previousAccommodationPostCode: number;
   previousAccommodationAddress: string;
   signatureDate: string;

@@ -8,7 +8,7 @@ class RegistrationForm extends React.Component {
     postCode: 0,
     apartmentNumber: 0,
     street: "",
-    houseNumber: "",
+    houseNumber: 0,
     addOn: "",
     floor: 0,
     landlord: "",
@@ -55,42 +55,23 @@ class RegistrationForm extends React.Component {
   detailsChangeHandler = (value: Details, index: number) => {
     const familyMembers =  this.state.familyMembers;
     familyMembers[index] = value;
-    this.setState(familyMembers);
+    this.setState({ familyMembers: familyMembers });
   };
 
   initFamilyMembers = (event: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
+    let familyMembers = this.state.familyMembers;
 
-    const familyMembers: Details[] = [];
-
-    for (let i = 0; i < value; i++) {
-      familyMembers.push(this.initMemberValues(i));
+    if(value > familyMembers.length) {
+      familyMembers.push(null);
+    } else if (value < familyMembers.length) {
+      familyMembers.pop();
     }
 
     this.setState({ familyMembers: familyMembers });
   };
 
-  initMemberValues = (index: number): Details => {
-    const member = this.state.familyMembers[index];
-    if (member) {
-      return member;
-    } else
-      return {
-        surname: "",
-        birthName: "",
-        firstName: "",
-        gender: "",
-        dateOfBirth: "",
-        placeOfBirth: "",
-        maritalRelationship: "",
-        religion: "",
-        currentNationalities: "",
-        idCard: "",
-        passport: "",
-      };
-  };
-
-  handleSubmit(event: FormEvent<HTMLFormElement>): void {
+  handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     // TODO: remove console logging
@@ -121,13 +102,13 @@ class RegistrationForm extends React.Component {
   render() {
     const detailForms: any[] = [];
 
-    Object.keys(this.state.familyMembers).forEach((member, index) => {
+    this.state.familyMembers.forEach((member, index) => {
       const id = index.toString();
       detailForms.push(
         <DetailsForm
           id={index.toString()}
           key={"familyMember" + id}
-          details={this.state.familyMembers[index]}
+          details={member}
           handleChange={this.detailsChangeHandler}
         />
       );
@@ -231,7 +212,7 @@ class RegistrationForm extends React.Component {
               className="form-control"
               type="number"
               min="1"
-              value={Object.keys(this.state.familyMembers).length}
+              value={this.state.familyMembers.length}
               onChange={this.initFamilyMembers}
             />
             <small>

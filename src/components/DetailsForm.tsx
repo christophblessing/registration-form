@@ -3,7 +3,7 @@ import { Details } from "../types/types";
 
 interface Props {
   id: string;
-  details: Details;
+  details: Details | null;
   handleChange: (value: Details, index: number) => void;
 }
 
@@ -15,9 +15,32 @@ export class DetailsForm extends React.Component<Props> {
     super(props);
 
     this.id = props.id;
-    this.details = props.details;
     this.handleChange = this.handleChange.bind(this);
+
+    if (props.details) {
+      this.details = props.details as Details;
+    } else {
+      this.details = {
+        surname: "",
+        birthName: "",
+        firstName: "",
+        gender: "",
+        dateOfBirth: "",
+        placeOfBirth: "",
+        maritalRelationship: "",
+        religion: "",
+        currentNationalities: "",
+        idCard: "",
+        passport: "",
+      };
+    }
+
+    this.props.handleChange(this.details, Number.parseInt(this.id));
   }
+
+  isEmptyObject = (obj: object): boolean => {
+    return Object.keys(obj).length === 0;
+  };
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const id = this.id;
