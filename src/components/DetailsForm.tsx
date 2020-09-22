@@ -18,7 +18,7 @@ export class DetailsForm extends React.Component<Props> {
     this.handleChange = this.handleChange.bind(this);
 
     if (props.details) {
-      this.details = props.details as Details;
+      this.details = props.details;
     } else {
       this.details = {
         surname: "",
@@ -37,10 +37,6 @@ export class DetailsForm extends React.Component<Props> {
 
     this.props.handleChange(this.details, this.id);
   }
-
-  isEmptyObject = (obj: object): boolean => {
-    return Object.keys(obj).length === 0;
-  };
 
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const id = this.id;

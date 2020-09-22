@@ -12,21 +12,7 @@ class RegistrationForm extends React.Component {
     addOn: "",
     floor: 0,
     landlord: "",
-    familyMembers: [
-      {
-        surname: "",
-        birthName: "",
-        firstName: "",
-        gender: "",
-        dateOfBirth: "",
-        placeOfBirth: "",
-        maritalRelationship: "",
-        religion: "",
-        currentNationalities: "",
-        idCard: "",
-        passport: "",
-      },
-    ],
+    familyMembers: [null],
     previousAccommodationPostCode: 0,
     previousAccommodationAddress: "",
     signatureDate: "",
@@ -53,7 +39,7 @@ class RegistrationForm extends React.Component {
   };
 
   detailsChangeHandler = (value: Details, index: number) => {
-    const familyMembers =  this.state.familyMembers;
+    const familyMembers = this.state.familyMembers;
     familyMembers[index] = value;
     this.setState({ familyMembers: familyMembers });
   };
@@ -62,7 +48,7 @@ class RegistrationForm extends React.Component {
     const value = parseInt(event.target.value);
     let familyMembers = this.state.familyMembers;
 
-    if(value > familyMembers.length) {
+    if (value > familyMembers.length) {
       familyMembers.push(null);
     } else if (value < familyMembers.length) {
       familyMembers.pop();
@@ -73,22 +59,22 @@ class RegistrationForm extends React.Component {
 
   handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-      // Source:
-      // https://stackoverflow.com/questions/3665115
-      const fakeDownloadButton = document.createElement("a");
+    // Source:
+    // https://stackoverflow.com/questions/3665115
+    const fakeDownloadButton = document.createElement("a");
 
-      fakeDownloadButton.setAttribute(
-        "href",
-        "data:text/plain;charset=utf-8," +
-          encodeURIComponent(JSON.stringify(this.state))
-      );
-      fakeDownloadButton.setAttribute("download", "form-data.json");
-      fakeDownloadButton.style.display = "none";
-      document.body.appendChild(fakeDownloadButton);
+    fakeDownloadButton.setAttribute(
+      "href",
+      "data:text/plain;charset=utf-8," +
+        encodeURIComponent(JSON.stringify(this.state))
+    );
+    fakeDownloadButton.setAttribute("download", "form-data.json");
+    fakeDownloadButton.style.display = "none";
+    document.body.appendChild(fakeDownloadButton);
 
-      fakeDownloadButton.click();
+    fakeDownloadButton.click();
 
-      document.body.removeChild(fakeDownloadButton);
+    document.body.removeChild(fakeDownloadButton);
   }
 
   render() {
@@ -100,7 +86,7 @@ class RegistrationForm extends React.Component {
           id={index}
           key={"familyMember" + index}
           details={member}
-          handleChange={this.detailsChangeHandler}
+          handleChange={this.detailsChangeHandler.bind}
         />
       );
     });
