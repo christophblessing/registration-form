@@ -73,13 +73,6 @@ class RegistrationForm extends React.Component {
 
   handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    // TODO: remove console logging
-    const debugMode = true;
-
-    if (debugMode) {
-      console.log(this.state);
-    } else {
       // Source:
       // https://stackoverflow.com/questions/3665115
       const fakeDownloadButton = document.createElement("a");
@@ -96,7 +89,6 @@ class RegistrationForm extends React.Component {
       fakeDownloadButton.click();
 
       document.body.removeChild(fakeDownloadButton);
-    }
   }
 
   render() {
