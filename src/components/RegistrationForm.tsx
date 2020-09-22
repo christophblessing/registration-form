@@ -151,6 +151,7 @@ class RegistrationForm extends React.Component {
             <div className="form-group">
               <label>Into the apartment in Hamburg</label>
               <input
+                id="postCode"
                 name="postCode"
                 className="form-control"
                 type="number"
