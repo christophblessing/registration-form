@@ -4,7 +4,7 @@ import { Details } from "../types/types";
 interface Props {
   id: string;
   details: Details;
-  handleChange: (key: string, value: string, id: string) => void;
+  handleChange: (value: Details, index: number) => void;
 }
 
 class DetailsForm extends React.Component<Props> {
@@ -25,7 +25,7 @@ class DetailsForm extends React.Component<Props> {
     const key = this.parseKey(event.target.name, id);
 
     this.details[key as keyof Details] = value;
-    this.props.handleChange(key, value, id);
+    this.props.handleChange(this.details, Number.parseInt(id));
   };
 
   // radios use id in name tag to distinguish from the radios from other DetailForms

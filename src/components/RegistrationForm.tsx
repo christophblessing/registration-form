@@ -1,6 +1,6 @@
 import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
-import { FamilyMembers, Details, State } from "../types/types";
+import { Details, State } from "../types/types";
 
 class RegistrationForm extends React.Component {
   state: State = {
@@ -12,8 +12,8 @@ class RegistrationForm extends React.Component {
     addOn: "",
     floor: 0,
     landlord: "",
-    familyMembers: {
-      familyMember0: {
+    familyMembers: [
+      {
         surname: "",
         birthName: "",
         firstName: "",
@@ -26,7 +26,7 @@ class RegistrationForm extends React.Component {
         idCard: "",
         passport: "",
       },
-    },
+    ],
     previousAccommodationPostCode: 0,
     previousAccommodationAddress: "",
     signatureDate: "",
@@ -52,34 +52,26 @@ class RegistrationForm extends React.Component {
     this.setState({ [key]: value });
   };
 
-  detailsChangeHandler = (key: string, value: string, id: string) => {
-    this.setState((prevState: State) => ({
-      ...prevState,
-      familyMembers: {
-        ...prevState.familyMembers,
-        [id]: {
-          ...prevState.familyMembers[id],
-          [key]: value,
-        },
-      },
-    }));
+  detailsChangeHandler = (value: Details, index: number) => {
+    const familyMembers =  this.state.familyMembers;
+    familyMembers[index] = value;
+    this.setState(familyMembers);
   };
 
   initFamilyMembers = (event: ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(event.target.value);
 
-    const familyMembers: FamilyMembers = {};
+    const familyMembers: Details[] = [];
 
     for (let i = 0; i < value; i++) {
-      const name = "familyMember" + i;
-      familyMembers[name] = this.initMemberValues(name);
+      familyMembers.push(this.initMemberValues(i));
     }
 
     this.setState({ familyMembers: familyMembers });
   };
 
-  initMemberValues = (name: string): Details => {
-    const member = this.state.familyMembers[name];
+  initMemberValues = (index: number): Details => {
+    const member = this.state.familyMembers[index];
     if (member) {
       return member;
     } else
@@ -133,9 +125,9 @@ class RegistrationForm extends React.Component {
       const id = index.toString();
       detailForms.push(
         <DetailsForm
-          id={"familyMember" + id}
+          id={index.toString()}
           key={"familyMember" + id}
-          details={this.state.familyMembers["familyMember" + id]}
+          details={this.state.familyMembers[index]}
           handleChange={this.detailsChangeHandler}
         />
       );
