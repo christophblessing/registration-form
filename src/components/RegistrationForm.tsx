@@ -80,25 +80,29 @@ class RegistrationForm extends React.Component {
 
   initMemberValues = (name: string): Details => {
     const member = this.state.familyMembers[name];
-    return {
-      surname: member?.surname || "",
-      birthName: member?.birthName || "",
-      firstName: member?.firstName || "",
-      gender: member?.gender || "",
-      dateOfBirth: member?.dateOfBirth || "",
-      placeOfBirth: member?.placeOfBirth || "",
-      maritalRelationship: member?.maritalRelationship || "",
-      religion: member?.religion || "",
-      currentNationalities: member?.currentNationalities || "",
-      idCard: member?.idCard || "",
-      passport: member?.passport || "",
-    };
+    if (member) {
+      return member;
+    } else
+      return {
+        surname: "",
+        birthName: "",
+        firstName: "",
+        gender: "",
+        dateOfBirth: "",
+        placeOfBirth: "",
+        maritalRelationship: "",
+        religion: "",
+        currentNationalities: "",
+        idCard: "",
+        passport: "",
+      };
   };
 
   handleSubmit(event: FormEvent<HTMLFormElement>): void {
     event.preventDefault();
 
-    const debugMode = false;
+    // TODO: remove console logging
+    const debugMode = true;
 
     if (debugMode) {
       console.log(this.state);
@@ -252,12 +256,14 @@ class RegistrationForm extends React.Component {
                 className="form-control"
                 type="number"
                 name="previousAccommodationPostCode"
+                value={this.state.previousAccommodationPostCode}
                 onChange={this.handleChangeNumberValue}
               ></input>
               <small>Post Code</small>
               <input
                 className="form-control"
                 name="previousAccommodationAddress"
+                value={this.state.previousAccommodationAddress}
                 onChange={this.handleChange}
               />
               <small> Municipality / street / house number and add-on</small>
@@ -268,36 +274,38 @@ class RegistrationForm extends React.Component {
               if further domiciles exist.
             </small>
           </div>
-          <div className="form-group">
-            <label>Date</label>
-            <input
-              type="date"
-              name="signatureDate"
-              value={this.state.signatureDate}
-              className="form-control"
-              onChange={this.handleChange}
-              placeholder="yyyy-mm-dd"
-            />
-          </div>
-          <div className="form-group">
-            <label>City</label>
-            <input
-              name="signatureCity"
-              value={this.state.signatureCity}
-              className="form-control"
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label>Signature</label>
-            <canvas className="form-control" style={{ height: "100px" }}>
-              Please sign here
-            </canvas>
-          </div>
-          <div className="form-group">
-            <button type="submit" className="form-control btn btn-primary">
-              Submit
-            </button>
+          <div className="well">
+            <div className="form-group">
+              <label>Date</label>
+              <input
+                type="date"
+                name="signatureDate"
+                value={this.state.signatureDate}
+                className="form-control"
+                onChange={this.handleChange}
+                placeholder="yyyy-mm-dd"
+              />
+            </div>
+            <div className="form-group">
+              <label>City</label>
+              <input
+                name="signatureCity"
+                value={this.state.signatureCity}
+                className="form-control"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="form-group">
+              <label>Signature</label>
+              <canvas className="form-control" style={{ height: "100px" }}>
+                Please sign here
+              </canvas>
+            </div>
+            <div className="form-group">
+              <button type="submit" className="form-control btn btn-primary">
+                Submit
+              </button>
+            </div>
           </div>
         </form>
       </div>

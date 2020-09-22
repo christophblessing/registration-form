@@ -28,7 +28,7 @@ class DetailsForm extends React.Component<Props> {
     this.props.handleChange(key, value, id);
   };
 
-  // radios use the id in the name tag to distinguish from the radios from other tags
+  // radios use id in name tag to distinguish from the radios from other DetailForms
   parseKey = (key: string, id: string): string => {
     return key.replace(id, "");
   };
@@ -163,6 +163,7 @@ class DetailsForm extends React.Component<Props> {
               Divorced
             </label>
           </div>
+
           <div className="radio">
             <label>
               <input
@@ -174,6 +175,7 @@ class DetailsForm extends React.Component<Props> {
               Widowed
             </label>
           </div>
+
           <div className="radio">
             <label>
               <input
@@ -185,6 +187,7 @@ class DetailsForm extends React.Component<Props> {
               Civil Partnership
             </label>
           </div>
+
           <div className="radio">
             <label>
               <input
@@ -196,6 +199,7 @@ class DetailsForm extends React.Component<Props> {
               Annulled Civil Partnership
             </label>
           </div>
+
           <div className="radio">
             <label>
               <input
