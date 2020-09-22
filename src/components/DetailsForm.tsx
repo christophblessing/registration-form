@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { Details, detailsKeys } from "../types/types";
+import { Details } from "../types/types";
 
 interface Props {
   id: string;
@@ -24,7 +24,7 @@ class DetailsForm extends React.Component<Props> {
     const value = event.target.value;
     const key = this.parseKey(event.target.name, id);
 
-    this.details[key as detailsKeys] = value;
+    this.details[key as keyof Details] = value;
     this.props.handleChange(key, value, id);
   };
 

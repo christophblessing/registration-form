@@ -31,16 +31,3 @@ export interface Details {
   idCard: string;
   passport: string;
 }
-
-export type detailsKeys =
-  | "surname"
-  | "birthName"
-  | "firstName"
-  | "gender"
-  | "dateOfBirth"
-  | "placeOfBirth"
-  | "maritalRelationship"
-  | "religion"
-  | "currentNationalities"
-  | "idCard"
-  | "passport";

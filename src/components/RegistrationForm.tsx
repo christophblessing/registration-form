@@ -157,7 +157,7 @@ class RegistrationForm extends React.Component {
               />
             </div>
             <div className="form-group">
-              <label>Into the apartment in in Hamburg</label>
+              <label>Into the apartment in Hamburg</label>
               <input
                 name="postCode"
                 className="form-control"
@@ -258,7 +258,7 @@ class RegistrationForm extends React.Component {
                 name="previousAccommodationPostCode"
                 value={this.state.previousAccommodationPostCode}
                 onChange={this.handleChangeNumberValue}
-              ></input>
+              />
               <small>Post Code</small>
               <input
                 className="form-control"
