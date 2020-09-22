@@ -2,13 +2,13 @@ import React, { ChangeEvent } from "react";
 import { Details } from "../types/types";
 
 interface Props {
-  id: string;
+  id: number;
   details: Details | null;
   handleChange: (value: Details, index: number) => void;
 }
 
 export class DetailsForm extends React.Component<Props> {
-  id: string;
+  id: number;
   details: Details;
 
   constructor(props: Props) {
@@ -35,7 +35,7 @@ export class DetailsForm extends React.Component<Props> {
       };
     }
 
-    this.props.handleChange(this.details, Number.parseInt(this.id));
+    this.props.handleChange(this.details, this.id);
   }
 
   isEmptyObject = (obj: object): boolean => {
@@ -45,10 +45,10 @@ export class DetailsForm extends React.Component<Props> {
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const id = this.id;
     const value = event.target.value;
-    const key = this.parseKey(event.target.name, id);
+    const key = this.parseKey(event.target.name, this.id.toString());
 
     this.details[key as keyof Details] = value;
-    this.props.handleChange(this.details, Number.parseInt(id));
+    this.props.handleChange(this.details, id);
   };
 
   // radios use id in name tag to distinguish from the radios from other DetailForms

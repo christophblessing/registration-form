@@ -103,11 +103,10 @@ class RegistrationForm extends React.Component {
     const detailForms: any[] = [];
 
     this.state.familyMembers.forEach((member, index) => {
-      const id = index.toString();
       detailForms.push(
         <DetailsForm
-          id={index.toString()}
-          key={"familyMember" + id}
+          id={index}
+          key={"familyMember" + index}
           details={member}
           handleChange={this.detailsChangeHandler}
         />
