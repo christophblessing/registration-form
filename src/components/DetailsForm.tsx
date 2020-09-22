@@ -7,7 +7,7 @@ interface Props {
   handleChange: (value: Details, index: number) => void;
 }
 
-class DetailsForm extends React.Component<Props> {
+export class DetailsForm extends React.Component<Props> {
   id: string;
   details: Details;
 
