@@ -1,6 +1,7 @@
 import React, { FormEvent, ChangeEvent } from "react";
 import DetailsForm from "./DetailsForm";
 import { Details, State } from "../types/types";
+import FormField from "./FormField";
 
 class RegistrationForm extends React.Component {
   state: State = {
@@ -95,17 +96,12 @@ class RegistrationForm extends React.Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <div className="well">
-            <div className="form-group">
-              <label>Date of moving</label>
-              <input
-                type="date"
+          <FormField type="date"
                 name="dateOfMoving"
                 value={this.state.dateOfMoving}
-                className="form-control"
                 onChange={this.handleChange}
-                placeholder="yyyy-mm-dd"
-              />
-            </div>
+                label="Date of moving"
+                ></FormField>
             <div className="form-group">
               <label>Into the apartment in Hamburg</label>
               <input
