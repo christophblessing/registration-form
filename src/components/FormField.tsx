@@ -1,6 +1,6 @@
 import React, { ChangeEvent } from "react";
 
-interface Props {
+export interface Props {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   id: string;
   type: string;
