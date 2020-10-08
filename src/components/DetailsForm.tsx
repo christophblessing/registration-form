@@ -15,7 +15,6 @@ export class DetailsForm extends React.Component<Props> {
     super(props);
 
     this.id = props.id;
-    this.handleChange = this.handleChange.bind(this);
 
     if (props.details) {
       this.details = props.details;

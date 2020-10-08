@@ -20,13 +20,6 @@ class RegistrationForm extends React.Component {
     signatureCity: "",
   };
 
-  constructor(props: {}) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleChangeNumberValue = this.handleChangeNumberValue.bind(this);
-  }
-
   handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const key = event.target.name;
     const value = event.target.value;
@@ -58,7 +51,7 @@ class RegistrationForm extends React.Component {
     this.setState({ familyMembers: familyMembers });
   };
 
-  handleSubmit(event: FormEvent<HTMLFormElement>) {
+  handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // Source:
     // https://stackoverflow.com/questions/3665115
@@ -96,25 +89,26 @@ class RegistrationForm extends React.Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <div className="well">
-          <FormField type="date"
-                name="dateOfMoving"
-                value={this.state.dateOfMoving}
-                onChange={this.handleChange}
-                label="Date of moving"
-                ></FormField>
-            <div className="form-group">
-              <label>Into the apartment in Hamburg</label>
-              <input
-                id="postCode"
-                name="postCode"
-                className="form-control"
-                type="number"
-                max={99999}
-                value={this.state.postCode}
-                onChange={this.handleChangeNumberValue}
-              />
-              <small>Post Code</small>
-            </div>
+
+            <FormField
+              id="dateOfMoving"
+              type="date"
+              name="dateOfMoving"
+              value={this.state.dateOfMoving}
+              onChange={this.handleChange}
+              label="Date of moving"
+            ></FormField>
+
+            <FormField
+              id="postCode"
+              type="number"
+              name="postCode"
+              label="Into the apartment in Hamburg"
+              description="Post Code"
+              value={this.state.postCode}
+              onChange={this.handleChangeNumberValue}
+            ></FormField>
+
             <div className="form-group">
               <label>Street</label>
               <input
