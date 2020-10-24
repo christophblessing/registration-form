@@ -69,7 +69,7 @@ class RegistrationForm extends React.Component {
     fakeDownloadButton.click();
 
     document.body.removeChild(fakeDownloadButton);
-  }
+  };
 
   render() {
     const detailForms: any[] = [];
@@ -89,7 +89,6 @@ class RegistrationForm extends React.Component {
       <div className="container">
         <form onSubmit={this.handleSubmit}>
           <div className="well">
-
             <FormField
               id="dateOfMoving"
               type="date"
@@ -109,67 +108,62 @@ class RegistrationForm extends React.Component {
               onChange={this.handleChangeNumberValue}
             ></FormField>
 
-            <div className="form-group">
-              <label>Street</label>
-              <input
-                className="form-control"
-                name="street"
-                value={this.state.street}
-                onChange={this.handleChange}
-              />
-              <small>(or place ect.)</small>
-            </div>
-            <div className="form-group">
-              <label>House Number</label>
-              <input
-                type="number"
-                className="form-control"
-                name="houseNumber"
-                value={this.state.houseNumber}
-                onChange={this.handleChangeNumberValue}
-              />
-            </div>
-            <div className="form-group">
-              <label>Add-on</label>
-              <input
-                className="form-control"
-                name="addOn"
-                value={this.state.addOn}
-                onChange={this.handleChange}
-              />
-              <small>(e.g. name of main tenant)</small>
-            </div>
-            <div className="form-group">
-              <label>Floor</label>
-              <input
-                type="number"
-                className="form-control"
-                name="floor"
-                value={this.state.floor}
-                onChange={this.handleChangeNumberValue}
-              />
-            </div>
-            <div className="form-group">
-              <label>Apartment Number</label>
-              <input
-                type="number"
-                className="form-control"
-                name="apartmentNumber"
-                value={this.state.apartmentNumber}
-                onChange={this.handleChangeNumberValue}
-              />
-            </div>
+            <FormField
+              id="street"
+              type="text"
+              name="street"
+              label="Street"
+              description="(or place ect.)"
+              value={this.state.street}
+              onChange={this.handleChange}
+            ></FormField>
+
+            <FormField
+              label="House Number"
+              id="houseNumber"
+              type="number"
+              name="houseNumber"
+              value={this.state.houseNumber}
+              onChange={this.handleChangeNumberValue}
+            ></FormField>
+
+            <FormField
+              id="addOn"
+              label="Add-on"
+              type="text"
+              name="addOn"
+              value={this.state.addOn}
+              onChange={this.handleChange}
+              description="e.g. name of main tenant"
+            ></FormField>
+
+            <FormField
+              id="floor"
+              label="Floor"
+              type="number"
+              name="floor"
+              value={this.state.floor}
+              onChange={this.handleChangeNumberValue}
+            ></FormField>
+
+            <FormField
+              label="Apartment Number"
+              id="apartmentNumber"
+              type="number"
+              name="apartmentNumber"
+              value={this.state.apartmentNumber}
+              onChange={this.handleChangeNumberValue}
+            ></FormField>
           </div>
 
-          <div className="form-group well">
-            <label>Name and Address of Landlord</label>
-            <input
-              className="form-control"
-              name="landlord"
-              value={this.state.landlord}
-              onChange={this.handleChange}
-            />
-          </div>
+          <FormField
+            label="Name and Address of Landlord"
+            id="landlord"
+            name="landlord"
+            type="text"
+            value={this.state.landlord}
+            onChange={this.handleChange}
+          ></FormField>
 
           {/* Begin Details Forms */}
           <div className="form-group">
@@ -216,26 +210,25 @@ class RegistrationForm extends React.Component {
             </small>
           </div>
           <div className="well">
-            <div className="form-group">
-              <label>Date</label>
-              <input
-                type="date"
-                name="signatureDate"
-                value={this.state.signatureDate}
-                className="form-control"
-                onChange={this.handleChange}
-                placeholder="yyyy-mm-dd"
-              />
-            </div>
-            <div className="form-group">
-              <label>City</label>
-              <input
-                name="signatureCity"
-                value={this.state.signatureCity}
-                className="form-control"
-                onChange={this.handleChange}
-              />
-            </div>
+            <FormField
+              label="Date"
+              id="signatureDate"
+              type="date"
+              name="signatureDate"
+              value={this.state.signatureDate}
+              onChange={this.handleChange}
+              placeholder="yyyy-mm-dd"
+            ></FormField>
+
+            <FormField
+              label="City"
+              id="signatureCity"
+              name="signatureCity"
+              type="text"
+              value={this.state.signatureCity}
+              onChange={this.handleChange}
+            ></FormField>
+
             <div className="form-group">
               <label>Signature</label>
               <canvas className="form-control" style={{ height: "100px" }}>

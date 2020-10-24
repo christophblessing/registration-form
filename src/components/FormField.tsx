@@ -7,6 +7,7 @@ export interface Props {
   name: string;
   label: string;
   description?: string;
+  placeholder?: string;
   value: string | number;
 }
 
@@ -20,6 +21,7 @@ function FormField(props: Props) {
         name={props.name}
         id={props.id}
         value={props.value}
+        placeholder={props.placeholder}
         onChange={props.onChange}
       />
       {props.description && <small>{props.description}</small>}
